@@ -11,7 +11,8 @@ Player_Student = function (config) {
     var self = {};
     self.config = config;
     self.searchStartTime = 0;
-    self.maxD = 2;
+    self.maxD = 5;
+
     self.bestAction = -1;
     // Student TODO:
     // You WILL need extra member variables here in order to implement IDAB properly
@@ -22,7 +23,7 @@ Player_Student = function (config) {
 
     // Function which is called by the GUI to get the action
     self.getAction = function (state) {
-        
+
         return self.IDAlphaBeta(state);
     }
 
@@ -55,7 +56,7 @@ Player_Student = function (config) {
             for (let x = 0; x < state.width; x++) {
                 for (let y = 0; y < state.height; y++) {
                     acc += state.get(x, y) == 2 ? 0 :
-                        state.get(x, y) == player ? self.computeScore(x, y) : 0;
+                        self.computeScore(x, y) * state.get(x, y) == player ? 1 : -1;
                     // : (-1) * self.computeScore(x, y);
                 }
             }
@@ -124,8 +125,7 @@ Player_Student = function (config) {
 
         var maxAction = -1;
         depth = self.maxD;
-        bestAction = null;
-        bestAction = self.AlphaBeta(state, -1000000, 1000000, depth, true)[1];
+        var bestAction = self.AlphaBeta(state, -1000000, 1000000, depth, true)[1];
 
 
         // here is the syntax to record the time in javascript
@@ -160,48 +160,84 @@ Player_Student = function (config) {
     //    value (int)  : the value of the state
     //
     self.AlphaBeta = function (state, alpha, beta, d, max) {
+        // 
+
+
+
         if (d == 0) {
+
+
+
+
+            // 
+            // 
+            // 
+
             return [(max ? -1 : 1) * self.eval(state, state.player == 1 ? 0 : 1), null];
         }
 
         // code for AlphaBeta goes here
         var actions = state.getLegalActions();
         var bestAction = null;
+        if (actions.length == 1) {
+            bestAction = actions[0];
+        }
 
         if (max) {
-            let value = -1000000;
-            for (var a = 0; a < actions.length; a++) {
 
+            let value = -10000;
+            for (let a = 0; a < actions.length; a++) {
+                
+                
+
+                
 
                 let c = state.copy();
                 c.doAction(actions[a]);
 
                 value = Math.max(value, self.AlphaBeta(c, alpha, beta, d - 1, !max)[0]);
-
-
-
+                if (c.board[3][3] == 0) {
+                    
+                    
+                    // 
+                    
+                    // 
+                }
                 if (value > alpha) {
                     alpha = value;
                     if (d == self.maxD) {
-
                         bestAction = actions[a];
                     }
                 }
                 if (alpha >= beta) {
                     break;
                 }
+                
+                // if (d == self.maxD) {
+                //     break;
+                // }
             }
 
 
             return [value, bestAction];
 
         } else if (!max) {
-            let value = 1000000;
-            for (var a = 0; a < actions.length; a++) {
+
+            let value = 10000;
+            for (let a = 0; a < actions.length; a++) {
+
 
                 let c = state.copy();
                 c.doAction(actions[a]);
-                value = Math.min(value, self.AlphaBeta(c, alpha, beta, d - 1, !max)[0]);
+                value = Math.min(value, self.AlphaBeta(c, alpha, beta, d - 1, max)[0]);
+                // 
+                if (c.board[3][3] == 0) {
+                    
+                    
+                    // 
+                    
+                    // 
+                }
 
                 beta = Math.min(beta, value);
 
@@ -219,10 +255,9 @@ Player_Student = function (config) {
 
         // return the value
 
-        return [max ? alpha : beta, bestAction]
     }
 
-    
-    
+
+
     return self;
 }

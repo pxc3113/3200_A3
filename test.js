@@ -8,16 +8,30 @@ foo = function(a){
 }
 
 t = s.copy();
-t.player = 0;
+// t.player = 0;
+// t.doAction(3);
+// t.player = 0;
+// t.doAction(3);
+// t.player = 0;
+// t.doAction(3);
+t.player = 1;
+t.doAction(0);
+t.player = 1;
 t.doAction(0);
 t.player = 0;
-t.doAction(2);
+t.doAction(3);
 t.player = 0;
 t.doAction(3);
-t.player = 1;
-plyr.getAction(t);
+t.player = 0;
+t.doAction(3);
+// t.player = 0;
+// t.doAction(4);
+// t.player = 1;                  
+console.log('t: ', t.board);
+
+// console.log('plyr.eval(t,1): ', plyr.eval(t,0));
+console.log('t.player: ', t.player);
 console.log('plyr.getAction(t): ', plyr.getAction(t));
-console.log('plyr.eval(t,1): ', plyr.eval(t,1));
 
 w = 3
 h = 7

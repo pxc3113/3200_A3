@@ -2,10 +2,6 @@
 // Computer Science 3200 - Assignment 3
 // Author(s): David Churchill [replace with your name(s)]
 //
-// All of your Assignment code should be in this file, it is the only file submitted.
-// You may create additional functions / member variables within this class, but do not
-// rename any of the existing variables or function names, since they are used by the
-// GUI to perform specific functions.
 
 Player_Student = function (config) {
     var self = {};
@@ -57,7 +53,6 @@ Player_Student = function (config) {
                 for (let y = 0; y < state.height; y++) {
                     acc += state.get(x, y) == 2 ? 0 :
                         self.computeScore(x, y) * state.get(x, y) == player ? 1 : -1;
-                    // : (-1) * self.computeScore(x, y);
                 }
             }
 
@@ -96,31 +91,6 @@ Player_Student = function (config) {
         return nw + ne + hrzntl + vrtcl;
 
     }
-
-    // Student TODO: Implement this function
-    //
-    // This funtion should implement Iterative Deepening Alpha Beta (IDAB). It should call the
-    // separate AlphaBeta function which implements the MiniMax search with Alpha Beta pruning.
-    // This function should use the self.config configuration options for the following:
-    // 
-    //     config.timeLimit - search time limit in milliseconds
-    //                      - timeLimit of 0 means there is no time limit
-    //     config.maxDepth  - maximum depth for IDAB  (depth > maxDepth) = eval()
-    //                      - maxDepth of 0 means no max depth
-    //
-    //     You can assume one of timeLimit or maxDepth will always be greater than 0
-    //
-    // Please note that both of these limits should be used, and whichever one happens first
-    // should be the stopping condition.
-    //
-    // Be sure to return the best action from the last COMPLETED AlphaBeta search.
-    //
-    // Args:
-    //    state        : the state for which to find the best action for the player to move
-    //
-    // Returns:
-    //    action (int) : the best action for the player to move
-    //
     self.IDAlphaBeta = function (state) {
 
         var maxAction = -1;
@@ -136,42 +106,8 @@ Player_Student = function (config) {
         return bestAction;
     }
 
-    // Student TODO: Implement this function
-    //
-    // This funtion should implement MiniMax with Alpha-Beta Pruning. It is recommended
-    // to first get vanilla MiniMax search working properly before implementing the Alpha
-    // Beta pruning enhancement. 
-    //
-    // Please be aware that this function does not return an action - it returns a state value.
-    // Actions must be set to a self variable, rather than returned. 
-    //
-    // It is important that you COPY states [via state.copy()] before generating children,
-    // otherwise you will be modifying reference to states on different levels of recursion.
-    // (Disregard this if you have implemented an action-undo functionality)
-    //
-    // Args:
-    //    state        : the state for the current node in the search tree
-    //    alpha (int)  : the current alpha value of the search
-    //    beta  (int)  : the current beta value of the search
-    //    depth (int)  : the current depth of the search
-    //    max (bool)   : whether the current player is maximizing or not
-    //
-    // Returns:
-    //    value (int)  : the value of the state
-    //
     self.AlphaBeta = function (state, alpha, beta, d, max) {
-        // 
-
-
-
         if (d == 0) {
-
-
-
-
-            // 
-            // 
-            // 
 
             return [(max ? -1 : 1) * self.eval(state, state.player == 1 ? 0 : 1), null];
         }
@@ -184,25 +120,17 @@ Player_Student = function (config) {
         }
 
         if (max) {
-
             let value = -10000;
             for (let a = 0; a < actions.length; a++) {
-                
-                
 
-                
+
+
+
 
                 let c = state.copy();
                 c.doAction(actions[a]);
 
                 value = Math.max(value, self.AlphaBeta(c, alpha, beta, d - 1, !max)[0]);
-                if (c.board[3][3] == 0) {
-                    
-                    
-                    // 
-                    
-                    // 
-                }
                 if (value > alpha) {
                     alpha = value;
                     if (d == self.maxD) {
@@ -212,7 +140,7 @@ Player_Student = function (config) {
                 if (alpha >= beta) {
                     break;
                 }
-                
+
                 // if (d == self.maxD) {
                 //     break;
                 // }
@@ -230,15 +158,6 @@ Player_Student = function (config) {
                 let c = state.copy();
                 c.doAction(actions[a]);
                 value = Math.min(value, self.AlphaBeta(c, alpha, beta, d - 1, max)[0]);
-                // 
-                if (c.board[3][3] == 0) {
-                    
-                    
-                    // 
-                    
-                    // 
-                }
-
                 beta = Math.min(beta, value);
 
                 if (alpha >= beta) {
